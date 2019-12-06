@@ -81,6 +81,7 @@ EOF
 cat >> /etc/wireguard/wg0.conf << EOF
 
 [Peer]
+# $USERNAME
 PublicKey = $CLIENT_PUBLIC_KEY
 PresharedKey = $CLIENT_PRESHARED_KEY
 AllowedIPs = $CLIENT_IP
