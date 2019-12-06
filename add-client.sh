@@ -35,15 +35,12 @@ PRIV_KEY="_private.key"
 PUB_KEY="_public.key"
 ALLOWED_IP="0.0.0.0/0"
 
-echo "Creating peer folder to hold config and keys..."
 # Go to the wireguard directory and create a directory structure in which we will store client configuration files
 mkdir -p ./clients
 cd ./clients
 mkdir ./$USERNAME
 cd ./$USERNAME
 umask 077
-
-echo "Generating keys..."
 
 #Generate keys
 CLIENT_PRESHARED_KEY=$( wg genpsk )
@@ -72,6 +69,7 @@ DNS = $DNS
 
 
 [Peer]
+# $USERNAME
 PublicKey = $SERVER_PUBLIC_KEY
 PresharedKey = $CLIENT_PRESHARED_KEY
 AllowedIPs = $ALLOWED_IP
@@ -96,8 +94,11 @@ systemctl start wg-quick@wg0
 qrencode -t ansiutf8 < ./$USERNAME.conf
 
 # Show config file
-echo "# Display $USERNAME.conf"
+echo "# Display $USERNAME.conf . Copy this into the interface on your WG client if you can't use the QR code."
 cat ./$USERNAME.conf
+echo " "
+echo " "
+echo " "
 
 # Save QR config to png file
 qrencode -t png -o ./$USERNAME.png < ./$USERNAME.conf
